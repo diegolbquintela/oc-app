@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { transactionActions } from '../../store/transactionSlice';
 
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {
+  const dispatch = useDispatch();
+  const showHoldings = useSelector((state) => state.transaction.holdings);
+
   const [enteredTicker, setEnteredTicker] = useState('');
   const [enteredPrice, setEnteredPrice] = useState('');
   const [enteredQuantity, setEnteredQuantity] = useState('');
+  const [holdings, setHoldings] = useState([]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -16,6 +23,11 @@ const AddTransactions = (props) => {
     };
 
     console.log(transaction);
+
+    setHoldings(showHoldings);
+    console.log(holdings);
+
+    dispatch(transactionActions.addTransaction(transaction));
   };
 
   return (
@@ -48,6 +60,11 @@ const AddTransactions = (props) => {
 
         <button>Add Transactions</button>
       </form>
+      <ul>
+        {holdings.map((item) => (
+          <li>{`${item.ticker} $${item.price} ${item.quantity} shares`}</li>
+        ))}
+      </ul>
     </div>
   );
 };
