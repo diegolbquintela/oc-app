@@ -1,5 +1,11 @@
+import AddTransactions from '../components/AddTransactions';
+
 const Holdings = () => {
-  return <div>holdings</div>;
+  return (
+    <>
+      <AddTransactions />
+    </>
+  );
 };
 
 export default Holdings;
