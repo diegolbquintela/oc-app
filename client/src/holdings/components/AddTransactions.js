@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { DataGrid } from '@mui/x-data-grid';
 
 import { transactionActions } from '../../store/transactionSlice';
 
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {
+  //TODO: new state action for dispatching
+  const editButtonHandler = (e) => {};
+  const removeButtonHandler = (e) => {};
+
   let transaction;
   const dispatch = useDispatch();
   const showHoldings = useSelector((state) => state.transaction.holdings);
@@ -27,10 +32,6 @@ const AddTransactions = (props) => {
       price: priceInputRef.current.value,
       quantity: quantityInputRef.current.value,
     };
-
-    console.log(transaction);
-
-    console.log(holdings);
 
     dispatch(transactionActions.addTransaction(transaction));
   };
@@ -72,14 +73,29 @@ const AddTransactions = (props) => {
 
         <button>Add Transactions</button>
       </form>
-      <ul>
-        {holdings.length > 0 &&
-          holdings.map((item) => (
-            <li
-              key={item.ticker}
-            >{`${item.ticker} $${item.price} ${item.quantity} shares`}</li>
-          ))}
+      {/* <ul>
+        {holdings.map((item) => (
+          <li key={item.ticker}>
+            {`${item.ticker} $${item.price} ${item.quantity} shares`}
+            <button onClick={editButtonHandler}>edit</button>
+            <button onClick={removeButtonHandler}>remove</button>
+          </li>
+        ))}
       </ul>
+      {holdings.length > 0 && <button>submit</button>} */}
+      <div style={{ height: 400, width: '100%' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div style={{ flexGrow: 1 }}>
+            {holdings.map((item) => (
+              <li key={item.ticker}>
+                {`${item.ticker} $${item.price} ${item.quantity} shares`}
+                <button onClick={editButtonHandler}>edit</button>
+                <button onClick={removeButtonHandler}>remove</button>
+              </li>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
