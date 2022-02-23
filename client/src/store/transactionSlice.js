@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialTransactionState = {
-  updateHoldings: [],
+  holdings: [],
   ticker: '',
   price: 0,
   quantity: 0,
@@ -12,24 +12,34 @@ export const transactionSlice = createSlice({
   initialState: initialTransactionState,
   reducers: {
     addTransaction(state, action) {
-      const newItem = action.payload;
-      const existingItem = state.items.find(
-        (item) => item.ticker === newItem.ticker
+      const newHolding = action.payload;
+      const existingHolding = state.holdings.find(
+        (holding) => holding.ticker === newHolding.ticker
       );
 
-      if (!existingItem) {
-        state.items.push({
-          itemId: newItem.ticker,
-          ticker: newItem.ticker,
-          price: newItem.price,
-          quantity: newItem.quantity,
+      if (!existingHolding) {
+        state.holdings.push({
+          holdingId: newHolding.ticker,
+          ticker: newHolding.ticker,
+          price: newHolding.price,
+          quantity: newHolding.quantity,
         });
       } else {
-        existingItem.quantity++;
-        existingItem.item.price =
-          (newItem.price * newItem.quantity +
-            existingItem.price * existingItem.quantity) /
-          (existingItem.quantity + newItem.quantity);
+        // TODO: just a fix, q and p should be stored in DB
+        let initialTransactionAmount =
+          existingHolding.price * existingHolding.quantity;
+
+        existingHolding.quantity =
+          Number(existingHolding.quantity) + Number(newHolding.quantity);
+
+        let newTransactionAmount =
+          Number(newHolding.price) * Number(newHolding.quantity);
+
+        let totalAmount = newTransactionAmount + initialTransactionAmount;
+
+        existingHolding.price = (
+          totalAmount / existingHolding.quantity
+        ).toFixed(2);
       }
     },
   },
