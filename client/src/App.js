@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import Holdings from './holdings/pages/Holdings';
 import Articles from './articles/pages/Articles';
@@ -12,6 +13,7 @@ import Articles from './articles/pages/Articles';
 function App() {
   return (
     <Router>
+      <CssBaseline />
       <Switch>
         <Route path="/" exact>
           <Holdings />
