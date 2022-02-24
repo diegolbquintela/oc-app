@@ -15,9 +15,6 @@ const AddTransactions = (props) => {
   const showHoldings = useSelector((state) => state.transaction.holdings);
   console.log(showHoldings);
 
-  const [enteredTicker, setEnteredTicker] = useState('');
-  const [enteredPrice, setEnteredPrice] = useState('');
-  const [enteredQuantity, setEnteredQuantity] = useState('');
   const [holdings, setHoldings] = useState(showHoldings);
 
   const tickerInputRef = useRef();
@@ -43,6 +40,7 @@ const AddTransactions = (props) => {
   return (
     <div>
       <h1>Add Transactions</h1>
+
       <form onSubmit={submitHandler}>
         <label htmlFor="text">Company Ticker: </label>
         <input
