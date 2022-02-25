@@ -5,7 +5,9 @@ const transactionsControllers = require('../controllers/transactions-controllers
 
 const router = express.Router();
 
-router.get('/', transactionsControllers.getTransactions);
+router.get('/:uid', transactionsControllers.getTransactionsByUserId);
+
+router.get('/:tid', transactionsControllers.getTransactionsById);
 
 router.post('/', transactionsControllers.addTransaction);
 

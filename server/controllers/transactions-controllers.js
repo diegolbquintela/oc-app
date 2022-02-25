@@ -1,6 +1,7 @@
 const HttpError = require('../models/http-error');
+const Transaction = require('../models/transaction');
 
-const DUMMY_TRANSACTIONS = [
+let DUMMY_TRANSACTIONS = [
   {
     id: 't1',
     ticker: 'PLTR',
@@ -11,36 +12,136 @@ const DUMMY_TRANSACTIONS = [
   },
 ];
 
-// Get all transactions
-exports.getTransactions = async (req, res, next) => {
-  try {
-    const transactions = await DUMMY_TRANSACTIONS; // TODO:needs fix when added mongodb
+exports.getTransactionsById = async (req, res, next) => {
+  const transactionId = req.params.tid;
 
-    return res.status(200).json({
-      success: true,
-      count: transactions.length,
-      data: transactions,
-    });
+  let transaction;
+  try {
+    transaction = await Transaction.findById(transactionId);
   } catch (err) {
-    next(new HttpError('Could not find transactions.', 500));
+    return next(
+      new HttpError('Something went wrong, could not find a transaction.', 500)
+    );
   }
+
+  if (!transaction) {
+    return next(
+      new HttpError('Could not find a transaction for the provided id.', 404)
+    );
+  }
+  res.json({ transaction }).toObject({ getters: true });
+};
+
+// Get all transactions by user id
+exports.getTransactionsByUserId = async (req, res, next) => {
+  const userId = req.params.uid;
+
+  let transactions;
+  try {
+    transactions = await Transaction.find({ user: userId });
+  } catch (err) {
+    return next(
+      new HttpError(
+        'Fetching transactions failed, please try again later.',
+        500
+      )
+    );
+  }
+
+  return res.status(200).json({
+    success: true,
+    transactions: transactions.map((transaction) =>
+      transaction.toObject({ getters: true })
+    ),
+  });
 };
 
 exports.addTransaction = async (req, res, next) => {
-  try {
-    // TODO:add date later
-    const { ticker, price, quantity } = req.body;
-    const transaction = await DUMMY_TRANSACTIONS.push(req.body);
+  const { ticker, price, quantity, date, user } = req.body;
 
-    return res.status(201).json({
-      success: true,
-      data: transaction,
-    });
+  const createdTransaction = new Transaction({
+    ticker,
+    price,
+    quantity,
+    date,
+    user,
+  });
+
+  try {
+    await createdTransaction.save();
   } catch (err) {
-    next(new HttpError('Could not add the transaction.', 500));
+    return next(
+      new HttpError('Creating transaction failed, please try again.', 500)
+    );
   }
+
+  res.status(201).json({
+    success: true,
+    transaction: createdTransaction.toObject({ getters: true }),
+  });
 };
 
-exports.updateTransactionById = async (req, res, next) => {};
+exports.updateTransactionById = async (req, res, next) => {
+  const { price, quantity, date } = req.body;
+  const transactionId = req.params.tid;
 
-exports.deleteTransactionById = async (req, res, next) => {};
+  let updatedTransaction;
+  let transactionIndex;
+  try {
+    updatedTransaction = await Transaction.findById(transactionId);
+  } catch (err) {
+    return next(new HttpError('Transaction not found', 404));
+  }
+
+  updatedTransaction.price = price;
+  updatedTransaction.quantity = quantity;
+  updatedTransaction.date = date;
+
+  try {
+    await updatedTransaction.save();
+  } catch (err) {
+    return next(
+      new HttpError(
+        'Something went wrong, could not updated the transaction.',
+        500
+      )
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    transaction: updatedTransaction.toObject({ getters: true }),
+  });
+};
+
+exports.deleteTransactionById = async (req, res, next) => {
+  const transactionId = req.params.tid;
+
+  let transaction;
+  try {
+    transaction = await Transaction.findById(transactionId);
+  } catch (err) {
+    return next(
+      new HttpError(
+        'Something went wrong, could not delete the transaction.',
+        500
+      )
+    );
+  }
+
+  try {
+    transaction.remove();
+  } catch (err) {
+    return next(
+      new HttpError(
+        'Something went wrong, could not updated the transaction.',
+        500
+      )
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    message: 'Deleted transaction.',
+  });
+};
