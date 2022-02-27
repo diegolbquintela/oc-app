@@ -1,41 +1,74 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { DataGrid } from '@mui/x-data-grid';
-
-import { transactionActions } from '../../store/transactionSlice';
 
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {
-  //TODO: new state action for dispatching
-  const editButtonHandler = (e) => {};
-  const removeButtonHandler = (e) => {};
-
   let transaction;
-  const dispatch = useDispatch();
-  const showHoldings = useSelector((state) => state.transaction.holdings);
-  console.log(showHoldings);
 
-  const [holdings, setHoldings] = useState(showHoldings);
+  const [holdings, setHoldings] = useState([]);
+  const [isFetched, setIsFetched] = useState(false);
 
   const tickerInputRef = useRef();
   const priceInputRef = useRef();
   const quantityInputRef = useRef();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    transaction = {
-      ticker: tickerInputRef.current.value.toUpperCase().trim(),
-      price: priceInputRef.current.value,
-      quantity: quantityInputRef.current.value,
-    };
+    try {
+      const response = await fetch('http://localhost:8000/api/transactions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ticker: tickerInputRef.current.value.toUpperCase().trim(),
+          price: priceInputRef.current.value,
+          quantity: quantityInputRef.current.value,
+          user: 'u1',
+        }),
+      });
 
-    dispatch(transactionActions.addTransaction(transaction));
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    setHoldings(showHoldings);
-  }, [showHoldings]);
+    const getTransactions = async () => {
+      try {
+        const response = await fetch(
+          'http://localhost:8000/api/transactions/u1'
+        );
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setHoldings(responseData.transactions);
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getTransactions();
+  }, [holdings]);
+
+  const editButtonHandler = (e) => {};
+
+  const removeButtonHandler = (transactionId) => {
+    try {
+      fetch(`http://localhost:8000/api/transactions/${transactionId}`, {
+        method: 'DELETE',
+      }).then(() => {
+        setIsFetched(false);
+        console.log(transactionId + ' deleted');
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   return (
     <div>
@@ -43,52 +76,33 @@ const AddTransactions = (props) => {
 
       <form onSubmit={submitHandler}>
         <label htmlFor="text">Company Ticker: </label>
-        <input
-          ref={tickerInputRef}
-          type="text"
-          //value={enteredTicker}
-          placeholder="Ticker"
-          //onChange={(e) => setEnteredTicker(e.target.value)}
-        />
+        <input ref={tickerInputRef} type="text" placeholder="Ticker" />
 
         <label htmlFor="price">Price</label>
-        <input
-          ref={priceInputRef}
-          type="number"
-          //value={enteredPrice}
-          placeholder="Price"
-          //onChange={(e) => setEnteredPrice(e.target.value)}
-        />
+        <input ref={priceInputRef} type="number" placeholder="Price" />
 
         <label htmlFor="quantity">Quantity</label>
         <input
           ref={quantityInputRef}
           type="number"
-          //value={enteredQuantity}
           placeholder="Shares/Quantity"
-          // onChange={(e) => setEnteredQuantity(e.target.value)}
         />
 
         <button>Add Transactions</button>
       </form>
-      {/* <ul>
-        {holdings.map((item) => (
-          <li key={item.ticker}>
-            {`${item.ticker} $${item.price} ${item.quantity} shares`}
-            <button onClick={editButtonHandler}>edit</button>
-            <button onClick={removeButtonHandler}>remove</button>
-          </li>
-        ))}
-      </ul>
-      {holdings.length > 0 && <button>submit</button>} */}
+
       <div style={{ height: 400, width: '100%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div style={{ flexGrow: 1 }}>
             {holdings.map((item) => (
-              <li key={item.ticker}>
+              <li key={item._id}>
                 {`${item.ticker} $${item.price} ${item.quantity} shares`}
-                <button onClick={editButtonHandler}>edit</button>
-                <button onClick={removeButtonHandler}>remove</button>
+                <button onClick={() => editButtonHandler(item._id)}>
+                  edit
+                </button>
+                <button onClick={() => removeButtonHandler(item._id)}>
+                  remove
+                </button>
               </li>
             ))}
           </div>
