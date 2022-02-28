@@ -9,6 +9,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import Holdings from './holdings/pages/Holdings';
 import Articles from './articles/pages/Articles';
+import UpdateTransactions from './holdings/pages/UpdateTransaction';
 
 function App() {
   return (
@@ -21,8 +22,11 @@ function App() {
         <Route path="/articles" exact>
           <Articles />
         </Route>
-        <Redirect to="/" />
+        <Route path="/holdings/:transactionId" exact>
+          <UpdateTransactions />
+        </Route>
       </Switch>
+      <Redirect to="/" />
     </Router>
   );
 }
