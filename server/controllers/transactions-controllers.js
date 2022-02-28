@@ -29,7 +29,7 @@ exports.getTransactionsById = async (req, res, next) => {
       new HttpError('Could not find a transaction for the provided id.', 404)
     );
   }
-  res.json({ transaction }).toObject({ getters: true });
+  res.json({ transaction });
 };
 
 // Get all transactions by user id
