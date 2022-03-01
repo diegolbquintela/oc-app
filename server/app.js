@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const transactionsRoutes = require('./routes/transactions-routes');
 const usersRoutes = require('./routes/users-routes');
+const holdingsRoutes = require('./routes/holdings-routes');
 const HttpError = require('./models/http-error');
 const { url } = require('./config');
 
@@ -23,6 +24,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', usersRoutes);
 app.use('/api/transactions', transactionsRoutes);
+app.use('/api/holdings', holdingsRoutes);
 
 // Unsupported routes
 app.use((req, res, next) => {

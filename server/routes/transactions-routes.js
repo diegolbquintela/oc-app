@@ -1,6 +1,5 @@
 const express = require('express');
 
-const HttpError = require('../models/http-error');
 const transactionsControllers = require('../controllers/transactions-controllers');
 
 const router = express.Router();

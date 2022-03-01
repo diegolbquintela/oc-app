@@ -1,17 +1,6 @@
 const HttpError = require('../models/http-error');
 const Transaction = require('../models/transaction');
 
-let DUMMY_TRANSACTIONS = [
-  {
-    id: 't1',
-    ticker: 'PLTR',
-    price: 10,
-    quantity: 10,
-    date: '02/27/2022',
-    user: 'u1',
-  },
-];
-
 exports.getTransactionsById = async (req, res, next) => {
   const transactionId = req.params.tid;
 
@@ -63,6 +52,7 @@ exports.addTransaction = async (req, res, next) => {
     ticker,
     price,
     quantity,
+    amount: price * quantity,
     date,
     user,
   });
@@ -95,6 +85,7 @@ exports.updateTransactionById = async (req, res, next) => {
 
   updatedTransaction.price = price;
   updatedTransaction.quantity = quantity;
+  updatedTransaction.amount = price * quantity;
   updatedTransaction.date = date;
 
   try {
