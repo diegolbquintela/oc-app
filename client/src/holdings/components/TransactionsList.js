@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import classes from './TransactionsList.module.css';
+
 const Holdings = (props) => {
   const [holdings, setHoldings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,24 +59,34 @@ const Holdings = (props) => {
 
   return (
     <>
-      <header>Holdings</header>
-
       {isLoading || (
-        <div style={{ height: 400, width: '100%' }}>
-          <div style={{ display: 'flex', height: '100%' }}>
-            <div style={{ flexGrow: 1 }}>
+        <div>
+          <div>
+            <ul className={classes.list}>
               {holdings.map((item) => (
                 <li key={item._id}>
-                  {`${item.ticker} $${item.price} ${item.quantity} shares`}
-                  <button onClick={() => editButtonHandler(item._id)}>
-                    edit
+                  <p>
+                    {`${item.ticker} $${item.price.toFixed(2)} - ${
+                      item.quantity
+                    } shares. Total: $${item.amount.toFixed(2)}.`}
+                  </p>
+
+                  <button
+                    onClick={() => editButtonHandler(item._id)}
+                    className={classes.edit_btn}
+                  >
+                    Edit
                   </button>
-                  <button onClick={() => removeButtonHandler(item._id)}>
-                    remove
+
+                  <button
+                    onClick={() => removeButtonHandler(item._id)}
+                    className={classes.delete_btn}
+                  >
+                    Remove
                   </button>
                 </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       )}

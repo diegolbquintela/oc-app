@@ -1,12 +1,16 @@
 import AddTransactions from '../components/AddTransactions';
-import HoldingsList from '../components/HoldingsList';
+import Header from '../components/Header';
+import TransactionsList from '../components/TransactionsList';
+
+import classes from './Holdings.module.css';
 
 const Holdings = () => {
   return (
-    <>
+    <article className={classes.container}>
+      <Header />
       <AddTransactions />
-      <HoldingsList />
-    </>
+      <TransactionsList />
+    </article>
   );
 };
 

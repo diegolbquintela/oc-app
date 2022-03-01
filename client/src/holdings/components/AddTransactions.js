@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 
+import classes from './AddTransactions.module.css';
+
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {
   const tickerInputRef = useRef();
@@ -31,23 +33,27 @@ const AddTransactions = (props) => {
 
   return (
     <div>
-      <h1>Holdings</h1>
-
       <form onSubmit={submitHandler}>
-        <label htmlFor="text">Company Ticker: </label>
-        <input ref={tickerInputRef} type="text" placeholder="Ticker" />
+        <div className={classes.form}>
+          <div>
+            <label htmlFor="text">Company Ticker </label>
+            <input ref={tickerInputRef} type="text" placeholder="Ticker" />
+          </div>
 
-        <label htmlFor="price">Price</label>
-        <input ref={priceInputRef} type="number" placeholder="Price" />
+          <div>
+            <label htmlFor="price">Price</label>
+            <input ref={priceInputRef} type="number" placeholder="Price" />
+          </div>
 
-        <label htmlFor="quantity">Quantity</label>
-        <input
-          ref={quantityInputRef}
-          type="number"
-          placeholder="Shares/Quantity"
-        />
+          <div>
+            <label htmlFor="quantity">Quantity</label>
+            <input ref={quantityInputRef} type="number" placeholder="Shares" />
+          </div>
+        </div>
 
-        <button>Add Transactions</button>
+        <div className={classes.btn_center}>
+          <button className={classes.btn}>Add Transactions</button>
+        </div>
       </form>
     </div>
   );

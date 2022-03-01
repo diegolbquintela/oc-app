@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 
+import classes from './UpdateTransaction.module.css';
+
 const UpdateTransactions = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fetchedData, setFetchedData] = useState('');
@@ -68,28 +70,35 @@ const UpdateTransactions = (props) => {
   }
 
   return (
-    <>
-      <h2>Update holding</h2>
+    <article>
+      <h2>Update Transaction</h2>
       <form onSubmit={submitHandler}>
-        <label htmlFor="price">Price</label>
-        <input
-          ref={priceInputRef}
-          defaultValue={fetchedData.price}
-          type="number"
-          placeholder="Price"
-        />
+        <div className={classes.form}>
+          <div>
+            <label htmlFor="price">Price</label>
+            <input
+              ref={priceInputRef}
+              defaultValue={fetchedData.price}
+              type="number"
+              placeholder="Price"
+            />
+          </div>
 
-        <label htmlFor="quantity">Quantity</label>
-        <input
-          ref={quantityInputRef}
-          defaultValue={fetchedData.quantity}
-          type="number"
-          placeholder="Shares/Quantity"
-        />
-
-        <button>Update Transactions</button>
+          <div>
+            <label htmlFor="quantity">Quantity</label>
+            <input
+              ref={quantityInputRef}
+              defaultValue={fetchedData.quantity}
+              type="number"
+              placeholder="Shares/Quantity"
+            />
+          </div>
+        </div>
+        <div className={classes.btn_center}>
+          <button className={classes.btn}>Update Transactions</button>
+        </div>
       </form>
-    </>
+    </article>
   );
 };
 
