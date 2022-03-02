@@ -15,18 +15,21 @@ const AddTransactions = (props) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/api/transactions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ticker: tickerInputRef.current.value.toUpperCase().trim(),
-          price: priceInputRef.current.value,
-          quantity: quantityInputRef.current.value,
-          user: 'u1',
-        }),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + '/transactions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            ticker: tickerInputRef.current.value.toUpperCase().trim(),
+            price: priceInputRef.current.value,
+            quantity: quantityInputRef.current.value,
+            user: 'u1',
+          }),
+        }
+      );
 
       await response.json();
     } catch (err) {
@@ -48,7 +51,12 @@ const AddTransactions = (props) => {
 
             <div className={classes.form_fields}>
               <label htmlFor="price">Price</label>
-              <input ref={priceInputRef} type="number" placeholder="Price" />
+              <input
+                ref={priceInputRef}
+                type="number"
+                step="0.00000000000000001"
+                placeholder="Price"
+              />
             </div>
 
             <div className={classes.form_fields}>
@@ -56,6 +64,7 @@ const AddTransactions = (props) => {
               <input
                 ref={quantityInputRef}
                 type="number"
+                step="0.00000000000000001"
                 placeholder="Shares"
               />
             </div>

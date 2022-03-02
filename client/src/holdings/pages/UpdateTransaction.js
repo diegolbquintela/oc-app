@@ -17,7 +17,8 @@ const UpdateTransactions = (props) => {
   const getTransactions = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/transactions/${userId}/${transactionId}`
+        process.env.REACT_APP_BACKEND_URL +
+          `/transactions/${userId}/${transactionId}`
       );
       const responseData = await response.json();
 
@@ -46,7 +47,8 @@ const UpdateTransactions = (props) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/transactions/${userId}/${transactionId}`,
+        process.env.REACT_APP_BACKEND_URL +
+          `/transactions/${userId}/${transactionId}`,
         {
           method: 'PATCH',
           headers: {
@@ -84,6 +86,7 @@ const UpdateTransactions = (props) => {
               ref={priceInputRef}
               defaultValue={fetchedData.price}
               type="number"
+              step="0.00000000000000001"
               placeholder="Price"
             />
           </div>
@@ -94,6 +97,7 @@ const UpdateTransactions = (props) => {
               ref={quantityInputRef}
               defaultValue={fetchedData.quantity}
               type="number"
+              step="0.00000000000000001"
               placeholder="Shares/Quantity"
             />
           </div>

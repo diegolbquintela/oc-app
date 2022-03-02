@@ -17,7 +17,7 @@ const Holdings = (props) => {
     const getTransactions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8000/api/transactions/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/transactions/${userId}`
         );
         const responseData = await response.json();
 
@@ -45,7 +45,8 @@ const Holdings = (props) => {
   const removeButtonHandler = (transactionId) => {
     try {
       fetch(
-        `http://localhost:8000/api/transactions/${userId}/${transactionId}`,
+        process.env.REACT_APP_BACKEND_URL +
+          `/transactions/${userId}/${transactionId}`,
         {
           method: 'DELETE',
         }
