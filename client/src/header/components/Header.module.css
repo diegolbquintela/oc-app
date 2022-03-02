@@ -1,5 +1,7 @@
 header {
   position: sticky;
+  margin: 2rem;
+  text-align: center;
 }
 h1 {
   letter-spacing: 0.1rem;

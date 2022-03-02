@@ -15,32 +15,33 @@ input[type='number'] {
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;
-  font-size: 16px;
-  padding: 10px;
+  font-size: 2rem;
+  padding: 1rem;
   width: 100%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .form {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form_fields {
+    margin-bottom: 1rem;
+  }
 }
 
 .btn_center {
   display: flex;
   justify-content: center;
-  margin: 1rem 2rem;
+  margin: 1rem auto;
 }
 
-.btn {
-  cursor: pointer;
-  background-color: #000000;
-  box-shadow: var(--box-shadow);
-  color: #fff;
-  border: 0;
-  display: block;
-  font-size: 16px;
-  margin: 10px 0 30px;
-  padding: 10px;
-  width: 100%;
-}
-
-.btn:hover {
-  outline: 0;
-  background-color: rgb(227, 225, 225);
-  color: #000000;
+@media only screen and (max-width: 767px) {
+  .btn_center {
+    max-width: 50%;
+  }
 }

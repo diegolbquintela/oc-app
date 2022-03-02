@@ -2,6 +2,9 @@
   list-style-type: none;
   padding: 0;
   margin-bottom: 40px;
+  max-width: 80%;
+  text-align: center;
+  margin: auto;
 }
 
 .list li {
@@ -9,22 +12,34 @@
   box-shadow: var(--box-shadow);
   color: #333;
   display: flex;
-  gap: 20%;
-  justify-content: space-between;
-  position: relative;
+  gap: 10%;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
   padding: 1rem;
   margin: 1rem;
+}
+
+li p {
+  padding: 1rem;
+  font-size: 1rem;
 }
 .list li:hover {
   background-color: rgb(229, 248, 242);
 }
 
-.list li.plus {
-  border-right: 5px solid #2ecc71;
+.list_text {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+  justify-content: center;
 }
-
-.list li.minus {
-  border-right: 5px solid #c0392b;
+.list_text p {
+  margin: 0;
+  padding: 0;
+  font-size: 0.7rem;
+  white-space: nowrap;
 }
 
 .edit_btn,
@@ -52,4 +67,45 @@
 edit_btn:hover {
   outline: 10;
   opacity: 1;
+}
+
+@media only screen and (max-width: 767px) {
+  .list li {
+    max-height: 5rem;
+    width: 100%;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 10%;
+  }
+
+  .list p {
+    flex-grow: 2;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .list_text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+  }
+  .list_text p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+
+  .btn button {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+
+  .edit_btn,
+  .delete_btn {
+    flex-grow: 1;
+  }
 }

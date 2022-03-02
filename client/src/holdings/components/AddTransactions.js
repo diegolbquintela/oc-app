@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 
 import classes from './AddTransactions.module.css';
+import Button from '../../shared/components/button/Button';
 
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {
   const tickerInputRef = useRef();
   const priceInputRef = useRef();
   const quantityInputRef = useRef();
+  const formRef = useRef();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -29,30 +31,32 @@ const AddTransactions = (props) => {
     } catch (err) {
       console.log(err);
     }
+
+    formRef.current.reset();
   };
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={submitHandler} ref={formRef}>
         <div className={classes.form}>
-          <div>
+          <div className={classes.form_fields}>
             <label htmlFor="text">Company Ticker </label>
             <input ref={tickerInputRef} type="text" placeholder="Ticker" />
           </div>
 
-          <div>
+          <div className={classes.form_fields}>
             <label htmlFor="price">Price</label>
             <input ref={priceInputRef} type="number" placeholder="Price" />
           </div>
 
-          <div>
+          <div className={classes.form_fields}>
             <label htmlFor="quantity">Quantity</label>
             <input ref={quantityInputRef} type="number" placeholder="Shares" />
           </div>
         </div>
 
         <div className={classes.btn_center}>
-          <button className={classes.btn}>Add Transactions</button>
+          <Button>Add Transactions</Button>
         </div>
       </form>
     </div>

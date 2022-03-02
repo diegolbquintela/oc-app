@@ -65,25 +65,29 @@ const Holdings = (props) => {
             <ul className={classes.list}>
               {holdings.map((item) => (
                 <li key={item._id}>
-                  <p>
-                    {`${item.ticker} $${item.price.toFixed(2)} - ${
-                      item.quantity
-                    } shares. Total: $${item.amount.toFixed(2)}.`}
-                  </p>
+                  <div className={classes.list_text}>
+                    <p>{`${item.ticker}`}</p>
+                    <p>{`Price: $${item.price.toFixed(2)} `}</p>
+                    <p>{`Shares: ${item.quantity}`}</p>
+                    <p>{`Total: $${item.amount.toFixed(2)}`}</p>
+                  </div>
 
-                  <button
-                    onClick={() => editButtonHandler(item._id)}
-                    className={classes.edit_btn}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => removeButtonHandler(item._id)}
-                    className={classes.delete_btn}
-                  >
-                    Remove
-                  </button>
+                  <div className={classes.btn}>
+                    <button
+                      onClick={() => editButtonHandler(item._id)}
+                      className={classes.edit_btn}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div className={classes.btn}>
+                    <button
+                      onClick={() => removeButtonHandler(item._id)}
+                      className={classes.delete_btn}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
