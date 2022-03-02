@@ -6,7 +6,9 @@ const transactionsRoutes = require('./routes/transactions-routes');
 const usersRoutes = require('./routes/users-routes');
 const holdingsRoutes = require('./routes/holdings-routes');
 const HttpError = require('./models/http-error');
-const { url } = require('./config');
+require('dotenv').config();
+
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.tpzao.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 const app = express();
 
@@ -42,5 +44,5 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(url)
-  .then(() => app.listen(8000))
+  .then(() => app.listen(process.env.PORT || 8000))
   .catch((err) => console.log(err));
