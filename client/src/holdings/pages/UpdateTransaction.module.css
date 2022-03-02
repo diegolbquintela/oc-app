@@ -4,8 +4,12 @@ article {
   margin-top: 5rem;
 }
 
-h2 {
+h2,
+h4 {
   text-align: center;
+}
+h4 {
+  margin-top: 5%;
 }
 
 .form {

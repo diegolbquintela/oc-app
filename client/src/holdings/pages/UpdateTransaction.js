@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import Button from '../../shared/components/button/Button';
+import Form from '../../shared/components/form/Form';
 
 import classes from './UpdateTransaction.module.css';
 
@@ -72,6 +74,8 @@ const UpdateTransactions = (props) => {
   return (
     <article>
       <h2>Update Transaction</h2>
+      <h4>{fetchedData.ticker}</h4>
+
       <form onSubmit={submitHandler}>
         <div className={classes.form}>
           <div>
@@ -95,9 +99,17 @@ const UpdateTransactions = (props) => {
           </div>
         </div>
         <div className={classes.btn_center}>
-          <button className={classes.btn}>Update Transactions</button>
+          <Button>Update Transactions</Button>
         </div>
       </form>
+
+      {/* TODO: IMPLEMENT REUSABLE FORM */}
+      {/* <Form
+        submitHandler={submitHandler}
+        priceRef={priceInputRef}
+        quantityInputRef={quantityInputRef}
+        button={`Update Transaction`}
+      /> */}
     </article>
   );
 };
