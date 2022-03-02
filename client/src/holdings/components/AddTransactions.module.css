@@ -7,7 +7,8 @@
 
 label {
   display: inline-block;
-  margin: 10px 0;
+  margin: 1.2rem 0;
+  text-align: justify;
 }
 
 input[type='text'],
@@ -15,10 +16,9 @@ input[type='number'] {
   border: 1px solid #dedede;
   border-radius: 2px;
   display: block;
-  font-size: 2rem;
-  padding: 1rem;
+  font-size: 1rem;
   width: 100%;
-  text-align: center;
+  text-align: justify;
 }
 
 @media only screen and (max-width: 767px) {
