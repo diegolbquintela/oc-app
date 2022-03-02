@@ -1,34 +1,51 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
 } from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
 
 import Header from './header/components/Header';
 import Holdings from './holdings/pages/Holdings';
-import Articles from './articles/pages/Articles';
-import UpdateTransactions from './holdings/pages/UpdateTransaction';
+
+const UpdateTransactions = React.lazy(() =>
+  import('./holdings/pages/UpdateTransaction')
+);
+const Articles = React.lazy(() => import('./articles/pages/Articles'));
+
+const routes = (
+  <article>
+    <Switch>
+      <Route path="/" exact>
+        <Holdings />
+      </Route>
+      <Route path="/articles" exact>
+        <Articles />
+      </Route>
+    </Switch>
+    <Redirect to="/" />
+  </article>
+);
 
 function App() {
   return (
     <Router>
       <Header />
-      <CssBaseline />
-      <Switch>
-        <Route path="/" exact>
-          <Holdings />
-        </Route>
-        <Route path="/articles" exact>
-          <Articles />
-        </Route>
-        <Route path="/holdings/:transactionId" exact>
-          <UpdateTransactions />
-        </Route>
-      </Switch>
-      <Redirect to="/" />
+      <main>
+        <Suspense
+          fallback={
+            <div className="center">
+              <h4>loading...</h4>
+            </div>
+          }
+        >
+          <Route path="/holdings/:transactionId" exact>
+            <UpdateTransactions />
+          </Route>
+        </Suspense>
+        {routes}
+      </main>
     </Router>
   );
 }
