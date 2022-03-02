@@ -1,0 +1,17 @@
+.btn {
+  cursor: pointer;
+  background-color: #000000;
+  box-shadow: var(--box-shadow);
+  color: #fff;
+  border: 0;
+  display: block;
+  font-size: 1rem;
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+}
+
+.btn:hover {
+  outline: 0;
+  background-color: rgb(227, 225, 225);
+  color: #000000;
+}
