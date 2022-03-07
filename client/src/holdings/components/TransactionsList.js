@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
+import TransactionsListItem from './TransactionsListItem';
 import classes from './TransactionsList.module.css';
 
 const Holdings = (props) => {
   const [holdings, setHoldings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const history = useHistory();
 
   // userID
   const userId = 'u1';
@@ -38,61 +37,23 @@ const Holdings = (props) => {
     };
   }, [holdings]);
 
-  const editButtonHandler = (transactionId) => {
-    history.push(`/holdings/${transactionId}`);
-  };
-
-  const removeButtonHandler = (transactionId) => {
-    try {
-      fetch(
-        process.env.REACT_APP_BACKEND_URL +
-          `/transactions/${userId}/${transactionId}`,
-        {
-          method: 'DELETE',
-        }
-      ).then(() => {
-        console.log(transactionId + ' deleted');
-      });
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
   return (
     <>
       {isLoading || (
-        <div>
-          <div>
-            <ul className={classes.list}>
-              {holdings.map((item) => (
-                <li key={item._id}>
-                  <div className={classes.list_text}>
-                    <p>{`${item.ticker}`}</p>
-                    <p>{`Price: $${item.price.toFixed(2)} `}</p>
-                    <p>{`Shares: ${item.quantity}`}</p>
-                    <p>{`Total: $${item.amount.toFixed(2)}`}</p>
-                  </div>
-
-                  <div className={classes.btn}>
-                    <button
-                      onClick={() => editButtonHandler(item._id)}
-                      className={classes.edit_btn}
-                    >
-                      Edit
-                    </button>
-                  </div>
-                  <div className={classes.btn}>
-                    <button
-                      onClick={() => removeButtonHandler(item._id)}
-                      className={classes.delete_btn}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className={classes.container}>
+          <ul className={classes.list}>
+            {holdings.map((item) => (
+              <TransactionsListItem
+                key={item._id}
+                userId={item.userID}
+                ticker={item.ticker}
+                price={item.price}
+                quantity={item.quantity}
+                amount={item.amount}
+                _id={item._id}
+              />
+            ))}
+          </ul>
         </div>
       )}
     </>
