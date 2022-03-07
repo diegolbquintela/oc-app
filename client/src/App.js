@@ -6,8 +6,9 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Header from './header/components/Header';
+import Header from './layout/components/header/Header';
 import Holdings from './holdings/pages/Holdings';
+import Footer from './layout/components/footer/Footer';
 
 const UpdateTransactions = React.lazy(() =>
   import('./holdings/pages/UpdateTransaction')
@@ -46,6 +47,7 @@ function App() {
         </Suspense>
         {routes}
       </main>
+      <Footer />
     </Router>
   );
 }
