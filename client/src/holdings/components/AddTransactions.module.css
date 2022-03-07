@@ -1,26 +1,27 @@
 .form {
   display: flex;
   gap: 5%;
-  margin: 5%;
+  margin: 1%;
   justify-content: center;
   font-size: 1rem;
 }
 
-label {
+.form label {
   display: inline-block;
   margin: 1.2rem 0;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  text-align: center;
 }
 
-input[type='text'],
-input[type='number'] {
+.form input[type='text'],
+.form input[type='number'] {
   border: 1px solid #dedede;
-  border-radius: 2px;
-  display: block;
-  font-size: 0.5rem;
+  border-radius: 10px;
+  /* display: block; */
+  font-size: 1rem;
   padding: 1rem;
-  width: 80%;
-  text-align: justify;
+  width: 12rem;
+  text-align: left;
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -57,5 +58,11 @@ input[type='number'] {
 @media only screen and (max-width: 767px) {
   .btn_center {
     max-width: 50%;
+  }
+
+  .form input[type='text'],
+  .form input[type='number'] {
+    width: 15rem;
+    text-align: center;
   }
 }
