@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import Button from '../../shared/components/button/Button';
-import Form from '../../shared/components/form/Form';
+import Button from '../../shared/components/UIElements/Button/Button';
+import useForm from '../../shared/hooks/form/Form';
 
 import classes from './UpdateTransaction.module.css';
 

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 
 import classes from './AddTransactions.module.css';
 import Button from '../../shared/components/UIElements/Button/Button';
-import Form from '../../shared/components/form/Form';
+import useForm from '../../shared/hooks/form/Form';
 
 // TODO: add condition: buy or sell
 const AddTransactions = (props) => {

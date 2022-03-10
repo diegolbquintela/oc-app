@@ -1,7 +1,7 @@
-import Button from '../button/Button';
+import Button from '../../components/UIElements/Button/Button';
 import classes from './Form.module.css';
 
-const Form = (props) => {
+const useForm = (props) => {
   return (
     <form onSubmit={props.submitHandler} ref={props.formRef}>
       <div className={classes.form}>
@@ -28,4 +28,4 @@ const Form = (props) => {
   );
 };
 
-export default Form;
+export default useForm;

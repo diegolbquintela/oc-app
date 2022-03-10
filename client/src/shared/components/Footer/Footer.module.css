@@ -3,16 +3,18 @@ footer {
   justify-content: center;
   align-content: center;
   max-height: 3rem;
-  position: absolute;
-  bottom: 0%;
   width: 100%;
   text-align: center;
+  margin: 1rem auto;
 }
 
+/* TODO: FIX FLEX */
 @media only screen and (max-width: 767px) {
   footer {
-    bottom: 0;
-    top: 125%;
-    padding: 0 1rem;
+    /* margin: 0.1rem; */
+    padding: 1rem;
+  }
+  footer p {
+    display: inline;
   }
 }
