@@ -46,7 +46,12 @@ const AddTransactions = (props) => {
           <div className={classes.form}>
             <div className={classes.form_fields}>
               <label htmlFor="text">Company Ticker </label>
-              <input ref={tickerInputRef} type="text" placeholder="Ticker" />
+              <input
+                className={classes.form_ticker_input}
+                ref={tickerInputRef}
+                type="text"
+                placeholder="Ticker"
+              />
             </div>
 
             <div className={classes.form_fields}>
