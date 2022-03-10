@@ -1,6 +1,6 @@
 # Transactions Tracker (MERN)
 
-> Full stack transactions tracker
+> Full stack transactions tracker.
 > Will evolve in the future to a Holdings tracker, where users will be able to add assets and track their performances.
 
 ## Usage
@@ -10,18 +10,20 @@ change config.env file in config folder
 ```
 
 ```
- npm install
+ Npm Install
  cd client npm install
  cd ..
+ cd server npm install
+ cd ..
 
- # Run front and backend
- npm run dev
 
- # Backend only
- npm run server
+ 1) Run the Backend
+ cd server 
+ npm start
 
- # Frontend only
- npm run client
+ 2) Run the Frontend only
+ cd client
+ npm start 
 
  # Build client
  cd client
