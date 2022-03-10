@@ -6,33 +6,35 @@ import {
   Switch,
 } from 'react-router-dom';
 
-import Header from './layout/components/header/Header';
-import Holdings from './holdings/pages/Holdings';
-import Footer from './layout/components/footer/Footer';
+import MainNavigation from './shared/components/Navigation/MainNavigation';
+import Header from './shared/components/Header/Header';
+import Holdings from './transactions/pages/Holdings';
+import Footer from './shared/components/Footer/Footer';
 
 const UpdateTransactions = React.lazy(() =>
-  import('./holdings/pages/UpdateTransaction')
+  import('./transactions/pages/UpdateTransaction')
 );
 const Articles = React.lazy(() => import('./articles/pages/Articles'));
 
 const routes = (
   <article>
     <Switch>
-      <Route path="/" exact>
+      <Route path="/u1/transactions" exact>
         <Holdings />
       </Route>
-      <Route path="/articles" exact>
+      <Route path="/u1/articles" exact>
         <Articles />
       </Route>
+      <Redirect to="/" />
     </Switch>
-    <Redirect to="/" />
   </article>
 );
 
 function App() {
   return (
     <Router>
-      <Header />
+      <MainNavigation />
+      {/* <Header /> */}
       <main>
         <Suspense
           fallback={
