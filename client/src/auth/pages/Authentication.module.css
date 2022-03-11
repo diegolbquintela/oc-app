@@ -1,0 +1,87 @@
+.form {
+  margin: 1%;
+  display: flex;
+  gap: 5%;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  height: 75vh;
+  width: 100%;
+}
+
+.form label {
+  display: block;
+  margin: 1.2rem 0;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.form input[type='email'],
+.form input[type='password'] {
+  border: 1px solid #dedede;
+  border-radius: 10px;
+  /* display: block; */
+  font-size: 1rem;
+  padding: 1rem;
+  width: 15rem;
+  text-align: left;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  text-transform: none;
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  text-transform: none;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  text-transform: none;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  text-transform: none;
+}
+::placeholder {
+  /* Recent browsers */
+  text-transform: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .form {
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form_fields {
+    margin-bottom: 1rem;
+  }
+}
+
+.btn_center {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .btn_center {
+    max-width: 50%;
+  }
+
+  .form input[type='text'],
+  .form input[type='number'] {
+    width: 15rem;
+    text-align: center;
+  }
+}
