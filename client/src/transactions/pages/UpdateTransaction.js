@@ -66,7 +66,7 @@ const UpdateTransactions = (props) => {
       console.log(err);
     }
 
-    history.push('/');
+    history.push('/u1/transactions');
   };
 
   if (isLoading) {

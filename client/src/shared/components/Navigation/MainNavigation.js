@@ -6,21 +6,26 @@ import SideDrawer from '../UIElements/SideDrawer/SideDrawer';
 import Backdrop from '../UIElements/SideDrawer/Backdrop';
 
 import classes from './MainNavigation.module.css';
+import { useEffect } from 'react';
 
 const MainNavigation = (props) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
-  const drawerClickHandler = (e) => {
+  const drawerClickHandler = () => {
     showDrawer ? setShowDrawer(false) : setShowDrawer(true);
+  };
+
+  const closeClickHandler = () => {
+    setShowDrawer(false);
   };
 
   return (
     <Fragment>
-      {/* {showDrawer && <Backdrop onCLick={drawerClickHandler} />} */}
       {showDrawer && (
-        <SideDrawer>
+        <SideDrawer onClick={closeClickHandler}>
           <nav className={classes.main_navigation__drawer_nav}>
-            <NavLinks onCLick={(e) => setShowDrawer(false)} />
+            <NavLinks />
+            {/* <span>x</span> */}
           </nav>
         </SideDrawer>
       )}

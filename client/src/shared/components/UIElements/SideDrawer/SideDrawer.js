@@ -4,7 +4,9 @@ import classes from './SideDrawer.module.css';
 
 const SideDrawer = (props) => {
   const content = (
-    <aside className={classes.SideDrawer}>{props.children}</aside>
+    <aside onClick={props.onClick} className={classes.side_drawer}>
+      {props.children}
+    </aside>
   );
   return ReactDOM.createPortal(content, document.getElementById('drawer-hook'));
 };
