@@ -20,12 +20,13 @@ const Articles = React.lazy(() => import('./articles/pages/Articles'));
 const routes = (
   <article>
     <Switch>
-      <Route path="/u1/transactions" exact>
-        <Holdings />
-      </Route>
       <Route path="/" exact>
         <Authentication />
       </Route>
+      <Route path="/u1/transactions" exact>
+        <Holdings />
+      </Route>
+
       {/* <Route path="/u1/articles" exact>
         <Articles />
       </Route> */}
