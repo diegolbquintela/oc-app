@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import TransactionsListItem from './TransactionsListItem';
 import classes from './TransactionsList.module.css';
@@ -6,6 +7,7 @@ import classes from './TransactionsList.module.css';
 const Holdings = (props) => {
   const [holdings, setHoldings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const updateTransactions = useSelector((state) => state.ui.transactionsList);
 
   // userID
   const userId = 'u1';
@@ -35,7 +37,9 @@ const Holdings = (props) => {
     return () => {
       isMounted = false;
     };
-  }, [holdings]);
+  }, [updateTransactions]);
+
+  // delete handler
 
   return (
     <>

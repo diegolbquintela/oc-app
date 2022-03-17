@@ -1,9 +1,12 @@
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { uiActions } from '../../store/ui-slice';
 
 import classes from './TransactionsList.module.css';
 
 const TransactionsListItem = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const editButtonHandler = (transactionId) => {
     history.push(`/holdings/${transactionId}`);
@@ -19,6 +22,7 @@ const TransactionsListItem = (props) => {
         }
       ).then(() => {
         console.log(transactionId + ' deleted');
+        dispatch(uiActions.decrement());
       });
     } catch (err) {
       console.log(err.message);
@@ -45,6 +49,7 @@ const TransactionsListItem = (props) => {
       <div className={classes.btn}>
         <button
           onClick={() => removeButtonHandler(props._id)}
+          // onDelete={props.onDelete}
           className={classes.delete_btn}
         >
           Remove
