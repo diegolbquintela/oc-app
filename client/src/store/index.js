@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import transactionSlice from './transactionSlice';
+import { uiSlice } from './ui-slice';
 
 const store = configureStore({
   reducer: {
-    transaction: transactionSlice.reducer,
+    ui: uiSlice.reducer,
   },
 });
 
