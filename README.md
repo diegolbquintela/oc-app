@@ -3,6 +3,10 @@
 > Full stack transactions tracker.
 > Will evolve in the future to a Holdings tracker, where users will be able to add assets and track their performances.
 
+## Features
+
+## Usage
+
 Currently, Authentication is under development. The UI is almost ready, requiring only client-side authentication for a better user experience. The backend is being built.
 
 ![Auth desktop](/img/auth-screen.png)
