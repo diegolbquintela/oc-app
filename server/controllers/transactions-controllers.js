@@ -1,5 +1,9 @@
+const mongoose = require('mongoose');
+const expressValidator = require('express-validator');
+
 const HttpError = require('../models/http-error');
 const Transaction = require('../models/transaction');
+const User = require('../models/user');
 
 exports.getTransactionsById = async (req, res, next) => {
   const transactionId = req.params.tid;
@@ -46,6 +50,12 @@ exports.getTransactionsByUserId = async (req, res, next) => {
 };
 
 exports.addTransaction = async (req, res, next) => {
+  const errors = expressValidator.validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422);
+    return next(new HttpError('Invalid inputs passed.', 422));
+  }
+
   const { ticker, price, quantity, date, user } = req.body;
 
   const createdTransaction = new Transaction({
@@ -57,8 +67,27 @@ exports.addTransaction = async (req, res, next) => {
     user,
   });
 
+  // check if user exists
+  let creator;
   try {
-    await createdTransaction.save();
+    creator = await User.findById(user);
+  } catch (error) {
+    return next(
+      new HttpError('Creating transaction failed, please try again', 500)
+    );
+  }
+
+  if (!creator) {
+    return next(new HttpError('Could not find user for provided id', 404));
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdTransaction.save({ session: sess });
+    creator.transactions.push(createdTransaction);
+    await creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     return next(
       new HttpError('Creating transaction failed, please try again.', 500)
@@ -72,11 +101,17 @@ exports.addTransaction = async (req, res, next) => {
 };
 
 exports.updateTransactionById = async (req, res, next) => {
+  const errors = expressValidator.validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422);
+    const error = new HttpError('Invalid inputs passed.', 422);
+    return next(error);
+  }
+
   const { price, quantity, date } = req.body;
   const transactionId = req.params.tid;
 
   let updatedTransaction;
-  let transactionIndex;
   try {
     updatedTransaction = await Transaction.findById(transactionId);
   } catch (err) {
@@ -110,7 +145,7 @@ exports.deleteTransactionById = async (req, res, next) => {
 
   let transaction;
   try {
-    transaction = await Transaction.findById(transactionId);
+    transaction = await Transaction.findById(transactionId).populate('user');
   } catch (err) {
     return next(
       new HttpError(
@@ -120,8 +155,20 @@ exports.deleteTransactionById = async (req, res, next) => {
     );
   }
 
+  if (!transaction) {
+    return next(
+      new HttpError('Could not find a transaction with the id provided.', 404)
+    );
+  }
+
   try {
-    transaction.remove();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await transaction.remove({ session: sess });
+    transaction.user.transactions.pull(transaction);
+
+    await transaction.user.save({ session: sess });
+    await sess.commitTransaction;
   } catch (err) {
     return next(
       new HttpError(

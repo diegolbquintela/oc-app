@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import MainNavigation from './shared/components/Navigation/MainNavigation';
-import Authentication from './auth/pages/Authentication';
+import Authentication from './users/pages/Authentication';
 import Header from './shared/components/Header/Header';
 import Holdings from './transactions/pages/Holdings';
 import Footer from './shared/components/Footer/Footer';
@@ -20,7 +20,7 @@ const Articles = React.lazy(() => import('./articles/pages/Articles'));
 const routes = (
   <article>
     <Switch>
-      <Route path="/" exact>
+      <Route path="/auth" exact>
         <Authentication />
       </Route>
       <Route path="/u1/transactions" exact>

@@ -17,7 +17,7 @@ const NavLinks = (props) => {
         <NavLink to="/">ARTICLES</NavLink>
       </li> */}
       <li>
-        <NavLink to="/">AUTHENTICATE</NavLink>
+        <NavLink to="/auth">AUTHENTICATE</NavLink>
       </li>
     </ul>
   );
