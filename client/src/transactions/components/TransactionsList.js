@@ -43,6 +43,7 @@ const Holdings = (props) => {
 
   return (
     <>
+      {isLoading && <p>loading...</p>}
       {isLoading || (
         <div className={classes.container}>
           <ul className={classes.list}>
