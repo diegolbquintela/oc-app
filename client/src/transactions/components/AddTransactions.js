@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import classes from './AddTransactions.module.css';
 import Button from '../../shared/components/UIElements/Button/Button';
 import useForm from '../../shared/hooks/form/Form';
-import { uiActions } from '../../store/ui-slice';
+import { uiActions } from '../../shared/store/ui-slice';
 
 // TODO: add condition: buy or sell
 const AddTransactions = () => {

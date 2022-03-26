@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React, { useRef, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { AuthContext } from '../../shared/context/auth-context';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
 
 const Login = (props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const auth = useContext(AuthContext);
+  const emailInputRef = useRef();
+  const passwordInputRef = useRef();
   const history = useHistory();
 
-  const submitLoginHandler = () => {
+  const submitLoginHandler = (e) => {
+    e.preventDefault();
+
+    const enteredEmail = emailInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
+    auth.login();
+
+    emailInputRef.current.value = '';
+    passwordInputRef.current.value = '';
+
     history.push('/u1/transactions');
-  };
-
-  const emailInputHandler = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const passwordInputHandler = (e) => {
-    setPassword(e.target.value);
   };
 
   return (
@@ -29,9 +33,9 @@ const Login = (props) => {
           <input
             type="email"
             id="email"
+            required
             placeholder="E-mail"
-            value={email}
-            onChange={emailInputHandler}
+            ref={emailInputRef}
           />
         </div>
         <div>
@@ -39,9 +43,9 @@ const Login = (props) => {
           <input
             type="password"
             id="password"
+            required
             placeholder="Password"
-            value={password}
-            onChange={passwordInputHandler}
+            ref={passwordInputRef}
           />
         </div>
         <div className={classes.btn_center}>
@@ -54,7 +58,7 @@ const Login = (props) => {
             onClick={props.onSignupClick}
             className={classes.btn_center}
           >
-            Sign up instead
+            Sign up
           </Button>
         </div>
       </div>

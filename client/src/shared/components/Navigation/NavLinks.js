@@ -1,24 +1,50 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { AuthContext } from '../../context/auth-context';
 import classes from './NavLInks.module.css';
 
 const NavLinks = (props) => {
+  const auth = useContext(AuthContext);
+
+  const logoutClickHandler = (e) => {
+    auth.logout();
+  };
+
   return (
     <ul className={classes.nav_links}>
       <li>
         <NavLink to="/" exact>
-          HOLDINGS
+          HOME
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/u1/transactions">TRANSACTIONS</NavLink>
-      </li>
+      {/* {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/" exact>
+            HOLDINGS
+          </NavLink>
+        </li>
+      )} */}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/u1/transactions">TRANSACTIONS</NavLink>
+        </li>
+      )}
       {/* <li>
         <NavLink to="/">ARTICLES</NavLink>
       </li> */}
-      <li>
-        <NavLink to="/auth">AUTHENTICATE</NavLink>
-      </li>
+      {!auth.isLoggedIn && (
+        <li>
+          <NavLink to="/auth">AUTHENTICATE</NavLink>
+        </li>
+      )}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/" onClick={logoutClickHandler}>
+            LOGOUT
+          </NavLink>
+        </li>
+      )}
     </ul>
   );
 };

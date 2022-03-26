@@ -90,7 +90,7 @@ input::-webkit-inner-spin-button {
 
   .form input[type='name'],
   .form input[type='email'],
-  .form input[type='number'] {
+  .form input[type='password'] {
     width: 15rem;
     text-align: center;
   }

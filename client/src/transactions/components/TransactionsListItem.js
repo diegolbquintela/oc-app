@@ -1,6 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { uiActions } from '../../store/ui-slice';
+import { uiActions } from '../../shared/store/ui-slice';
 
 import classes from './TransactionsList.module.css';
 
