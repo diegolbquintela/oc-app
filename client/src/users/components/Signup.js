@@ -1,52 +1,56 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { AuthContext } from '../../shared/context/auth-context';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
 
 const Signup = (props) => {
+  const auth = useContext(AuthContext);
   const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const formRef = useRef();
 
   const history = useHistory();
 
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
-
-    const enteredName = nameInputRef.current.value;
-    const enteredEmail = emailInputRef.current.value;
-    const enteredPassword = passwordInputRef.current.value;
 
     //TODO: add client side auth
 
-    const url = 'TODO: ADD SERVER ENDPOINT';
-    fetch(url, {
-      method: 'POST',
-      body: JSON.stringify({
-        name: enteredName,
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => {
-      if (res.ok) {
-      } else {
-        res.json().then((data) => {
-          //TODO: show error modal
-          console.log(data);
-        });
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + '/users/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: nameInputRef.current.value,
+            email: emailInputRef.current.value,
+            password: passwordInputRef.current.value,
+          }),
+        }
+      );
+
+      await response.json();
+      if (!response.ok) {
+        throw new Error(response.message);
       }
-    });
+      auth.login();
+    } catch (err) {
+      console.log(err);
+    }
+
+    //auth.login();
 
     history.push('/u1/transactions');
   };
 
   return (
-    <form onSubmit={submitLoginHandler} className={classes.form}>
+    <form ref={formRef} onSubmit={submitLoginHandler} className={classes.form}>
       <div>
         <div>
           <label htmlFor="name">Name</label>

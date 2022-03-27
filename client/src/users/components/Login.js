@@ -9,24 +9,45 @@ const Login = (props) => {
   const auth = useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const formRef = useRef();
   const history = useHistory();
 
-  const submitLoginHandler = (e) => {
+  const submitLoginHandler = async (e) => {
     e.preventDefault();
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    auth.login();
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + '/users/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: enteredEmail,
+            password: enteredPassword,
+          }),
+        }
+      );
 
-    emailInputRef.current.value = '';
-    passwordInputRef.current.value = '';
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      }
+      console.log(responseData);
+      auth.login();
+    } catch (err) {
+      console.log(err);
+    }
 
-    history.push('/u1/transactions');
+    //history.push('/u1/transactions');
   };
 
   return (
-    <form onSubmit={submitLoginHandler} className={classes.form}>
+    <form ref={formRef} onSubmit={submitLoginHandler} className={classes.form}>
       <div>
         <div>
           <label htmlFor="email">E-mail</label>

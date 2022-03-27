@@ -48,7 +48,7 @@ const login = async (req, res, next) => {
     return next(new HttpError('Logging in failed, please try again', 500));
   }
 
-  if (!identifiedUser || identifiedUser.password !== password) {
+  if (!existingUser || existingUser.password !== password) {
     return next(
       new HttpError('Could not identify user, invalid credentials.', 401)
     );
