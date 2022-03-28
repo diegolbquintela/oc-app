@@ -51,7 +51,7 @@ function App() {
         <Route path="/auth" exact>
           <Authentication />
         </Route>
-        <Redirect to="/auth" />
+        <Redirect to="/" />
       </Switch>
     );
   }

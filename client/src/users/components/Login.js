@@ -43,7 +43,7 @@ const Login = (props) => {
       console.log(err);
     }
 
-    //history.push('/u1/transactions');
+    history.push('/u1/transactions');
   };
 
   return (

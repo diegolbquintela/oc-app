@@ -1,0 +1,61 @@
+.article_container {
+  margin: 0 2rem;
+}
+
+.nav_buttons {
+  position: fixed;
+  right: 5%;
+  top: 85%;
+}
+
+.nav_buttons button {
+  cursor: pointer;
+  background-color: white;
+  width: 7rem;
+  height: 2rem;
+  margin-left: -5px;
+  font-weight: 100;
+}
+
+.nav_buttons button:hover {
+  background-color: black;
+  color: white;
+}
+
+.quote {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-end;
+}
+
+.quote p {
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.nav_mainpage_href {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .article_container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav_buttons {
+    right: 10%;
+    top: 85%;
+  }
+
+  .quote {
+    margin: 1.5rem 0;
+  }
+
+  .quote p {
+    font-size: 0.9rem;
+  }
+}

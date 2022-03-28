@@ -7,16 +7,14 @@
 
 ## Usage
 
-Currently, Authentication is under development. The UI is almost ready, requiring only client-side authentication for a better user experience. The backend is being built.
-
-![Auth desktop](/img/auth-screen.png)
-![Auth mobile](/img/auth-mobile.png)
+![Auth desktop](/assets/auth-screen.png)
+![Auth mobile](/assets/auth-mobile.png)
 
 Adding transactions is easy, just type quantity and price of acquisition. In the future these will be consolidated into a holdings screen, with charts and performance.
 
-![add transactions](/img/add-transactions-mobile.png)
-![transactions list](/img/transactions-list-mobile.png)
-![transactions list](/img/transactions-list.png)
+![add transactions](/assets/add-transactions-mobile.png)
+![transactions list](/assets/transactions-list-mobile.png)
+![transactions list](/assets/transactions-list.png)
 
 ## Usage
 
