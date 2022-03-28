@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../shared/context/auth-context';
@@ -11,6 +11,8 @@ const Login = (props) => {
   const passwordInputRef = useRef();
   const formRef = useRef();
   const history = useHistory();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const submitLoginHandler = async (e) => {
     e.preventDefault();
@@ -35,15 +37,17 @@ const Login = (props) => {
 
       const responseData = await response.json();
       if (!response.ok) {
+        setError(responseData.message);
+        setErrorMessage(responseData.message);
         throw new Error(responseData.message);
       }
       console.log(responseData);
+      setError(false);
       auth.login();
+      history.push('/u1/transactions');
     } catch (err) {
       console.log(err);
     }
-
-    history.push('/u1/transactions');
   };
 
   return (
@@ -69,6 +73,11 @@ const Login = (props) => {
             ref={passwordInputRef}
           />
         </div>
+
+        <div className={classes.error_message}>
+          {error && <p>{errorMessage}</p>}
+        </div>
+
         <div className={classes.btn_center}>
           <Button type="submit">Login</Button>
         </div>

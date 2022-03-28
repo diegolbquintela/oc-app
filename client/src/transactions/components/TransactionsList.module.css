@@ -109,3 +109,13 @@ edit_btn:hover {
     flex-grow: 1;
   }
 }
+
+.error_message {
+  margin: 1rem -0.5rem;
+  text-align: center;
+  overflow-wrap: break-word;
+  font-size: 0.8rem;
+  height: 1rem;
+  font-weight: 900;
+  color: red;
+}

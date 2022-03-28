@@ -8,6 +8,8 @@ const Holdings = (props) => {
   const [holdings, setHoldings] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const updateTransactions = useSelector((state) => state.ui.transactionsList);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // userID
   const userId = 'u1';
@@ -23,9 +25,12 @@ const Holdings = (props) => {
         const responseData = await response.json();
 
         if (!response.ok) {
+          setError(true);
+          setErrorMessage(responseData.message);
           throw new Error(responseData.message);
         }
 
+        setError(false);
         if (isMounted) setHoldings(responseData.transactions);
       } catch (err) {
         console.log(err.message);
@@ -46,6 +51,7 @@ const Holdings = (props) => {
       {isLoading && <p>loading...</p>}
       {isLoading || (
         <div className={classes.container}>
+          {error && <p className={classes.error_message}>{errorMessage}</p>}
           <ul className={classes.list}>
             {holdings.map((item) => (
               <TransactionsListItem

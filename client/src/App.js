@@ -34,6 +34,9 @@ function App() {
   if (isLoggedIn) {
     routes = (
       <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
         <Route path="/u1/transactions" exact>
           <Holdings />
         </Route>

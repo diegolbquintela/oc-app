@@ -12,6 +12,8 @@ const AddTransactions = () => {
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const dispatch = useDispatch();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const tickerInputHandler = (e) => {
     setTicker(e.target.value);
@@ -43,12 +45,18 @@ const AddTransactions = () => {
         }
       );
 
-      await response.json();
+      const responseData = await response.json();
+      if (!responseData.ok) {
+        setError(true);
+        setErrorMessage(responseData.message);
+        throw new Error(responseData.message);
+      }
       dispatch(uiActions.increment());
 
       setTicker('');
       setPrice('');
       setQuantity('');
+      setError(false);
     } catch (err) {
       console.log(err);
     }
@@ -96,6 +104,7 @@ const AddTransactions = () => {
           <div className={classes.btn_center}>
             <Button>Add Transactions</Button>
           </div>
+          {error && <p className={classes.error_message}>{errorMessage}</p>}
         </form>
       }
 

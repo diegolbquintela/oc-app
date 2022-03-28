@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../shared/context/auth-context';
@@ -11,6 +11,8 @@ const Signup = (props) => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const formRef = useRef();
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const history = useHistory();
 
@@ -35,18 +37,20 @@ const Signup = (props) => {
         }
       );
 
-      await response.json();
+      const responseData = await response.json();
       if (!response.ok) {
+        setError(responseData.message);
+        setErrorMessage(responseData.message);
         throw new Error(response.message);
       }
+      history.push('/u1/transactions');
       auth.login();
+      setError(false);
     } catch (err) {
       console.log(err);
     }
 
     //auth.login();
-
-    history.push('/u1/transactions');
   };
 
   return (
@@ -82,6 +86,11 @@ const Signup = (props) => {
             ref={passwordInputRef}
           />
         </div>
+
+        <div className={classes.error_message}>
+          {error && <p>{errorMessage}</p>}
+        </div>
+
         <div className={classes.btn_center}>
           <Button>Sign up</Button>
         </div>
