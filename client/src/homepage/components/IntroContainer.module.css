@@ -1,5 +1,5 @@
 .intro_container {
-  height: 80vh;
+  /* height: 80vh; */
 }
 
 .title {
@@ -28,9 +28,9 @@
 }
 
 @media only screen and (max-width: 767px) {
-  .intro_container {
+  /* .intro_container {
     height: 100%;
-  }
+  } */
 
   .title {
     margin: 0.5rem 0;

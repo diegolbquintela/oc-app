@@ -1,4 +1,5 @@
 import IntroContainer from '../components/IntroContainer';
+import MainQuote from '../components/MainQuote';
 import AlphaGeneration from '../components/AlphaGeneration';
 import Platforms from '../components/Platforms';
 
@@ -16,26 +17,23 @@ const HomePage = () => {
 
       <IntroContainer />
 
-      <div className={classes.quote}>
-        <p>Associate with people who are likely to improve you.</p>
-        <p>Welcome those who you are capable of improving.</p>
-        <p>The process is a mutual one: men learn as they teach.</p>
-        <p>Seneca the Younger</p>
+      <MainQuote />
+      <div>
+        <hr />
+        {/* count components dynamically */}
+        <a className={classes.nav_mainpage_href} href="">
+          01/
+        </a>
+        <AlphaGeneration />
       </div>
 
-      <hr />
-
-      {/* count components dynamically */}
-      <a className={classes.nav_mainpage_href} href="">
-        01/
-      </a>
-
-      <AlphaGeneration />
-
-      <a className={classes.nav_mainpage_href} href="">
-        02/
-      </a>
-      <Platforms />
+      <div>
+        <hr />
+        <a className={classes.nav_mainpage_href} href="">
+          02/
+        </a>
+        <Platforms />
+      </div>
 
       {/* <div>
         <span>ANOTHER IMAGE</span>

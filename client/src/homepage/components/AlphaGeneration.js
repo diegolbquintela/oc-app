@@ -38,7 +38,6 @@ const AlphaGeneration = () => {
           </div>
         </div>
       </div>
-      <hr />
     </div>
   );
 };

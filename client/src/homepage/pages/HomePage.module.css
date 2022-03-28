@@ -1,5 +1,8 @@
 .article_container {
   margin: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10%;
 }
 
 .nav_buttons {
@@ -20,19 +23,6 @@
 .nav_buttons button:hover {
   background-color: black;
   color: white;
-}
-
-.quote {
-  margin: 1rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: flex-end;
-}
-
-.quote p {
-  font-weight: 300;
-  font-size: 1.5rem;
 }
 
 .nav_mainpage_href {

@@ -1,5 +1,5 @@
 .container_alpha {
-  height: 70vh;
+  /* height: 70vh; */
 }
 
 .title_container {
@@ -50,9 +50,9 @@
   transition: transform 0s linear 0.25s;
 }
 
-@media only screen and (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .container_alpha {
-    height: 100vh;
+    height: 96vh;
   }
 
   .title {
@@ -77,5 +77,11 @@
 
   .description_btn__btn {
     font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1201px) {
+  .container_alpha {
+    height: auto;
   }
 }

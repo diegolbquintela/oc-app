@@ -22,7 +22,6 @@ const Platforms = () => {
             <a href="">Explore Articles →</a>
           </div>
         </li>
-        <hr />
       </ul>
     </div>
   );

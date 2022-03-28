@@ -25,7 +25,6 @@ const IntroContainer = () => {
           </a>
         </p>
       </div>
-      <hr />
     </div>
   );
 };

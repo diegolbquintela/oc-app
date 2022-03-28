@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
+import { AuthContext } from '../../shared/context/auth-context';
 import TransactionsListItem from './TransactionsListItem';
 import classes from './TransactionsList.module.css';
 
@@ -12,7 +13,16 @@ const Holdings = (props) => {
   const [errorMessage, setErrorMessage] = useState('');
 
   // userID
-  const userId = 'u1';
+  let userId;
+  const getUserId = async () => {
+    try {
+      await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/transactions/${userId}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
