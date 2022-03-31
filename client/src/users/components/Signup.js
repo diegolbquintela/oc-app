@@ -1,6 +1,7 @@
 import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { useHttp } from '../../hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
@@ -11,46 +12,32 @@ const Signup = (props) => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const formRef = useRef();
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isLoading, error, errorMessage, sendRequest, clearError } = useHttp();
 
   const history = useHistory();
 
   const submitLoginHandler = async (e) => {
     e.preventDefault();
 
-    //TODO: add client side auth
-
+    // TODO: improve client validation
     try {
-      const response = await fetch(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + '/users/signup',
+        'POST',
         {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: nameInputRef.current.value,
-            email: emailInputRef.current.value,
-            password: passwordInputRef.current.value,
-          }),
-        }
+          'Content-Type': 'application/json',
+        },
+        JSON.stringify({
+          name: nameInputRef.current.value,
+          email: emailInputRef.current.value,
+          password: passwordInputRef.current.value,
+        })
       );
 
-      const responseData = await response.json();
-      if (!response.ok) {
-        setError(responseData.message);
-        setErrorMessage(responseData.message);
-        throw new Error(response.message);
-      }
-      history.push('/u1/transactions');
       auth.login();
-      setError(false);
     } catch (err) {
       console.log(err);
     }
-
-    //auth.login();
   };
 
   return (
@@ -104,6 +91,7 @@ const Signup = (props) => {
             Login
           </Button>
         </div>
+        {isLoading && <p>Loading...</p>}
       </div>
     </form>
   );

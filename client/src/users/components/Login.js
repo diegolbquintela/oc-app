@@ -2,6 +2,7 @@ import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../shared/context/auth-context';
+import { useHttp } from '../../hooks/http-hook';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
 
@@ -11,8 +12,7 @@ const Login = (props) => {
   const passwordInputRef = useRef();
   const formRef = useRef();
   const history = useHistory();
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isLoading, error, errorMessage, sendRequest, clearError } = useHttp();
 
   const submitLoginHandler = async (e) => {
     e.preventDefault();
@@ -21,29 +21,17 @@ const Login = (props) => {
     const enteredPassword = passwordInputRef.current.value;
 
     try {
-      const response = await fetch(
+      const responseData = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + '/users/login',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: enteredEmail,
-            password: enteredPassword,
-          }),
-        }
+        'POST',
+        { 'Content-Type': 'application/json' },
+        JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+        })
       );
 
-      const responseData = await response.json();
-      if (!response.ok) {
-        setError(responseData.message);
-        setErrorMessage(responseData.message);
-        throw new Error(responseData.message);
-      }
-      console.log(responseData);
-      setError(false);
-      auth.login();
+      auth.login(responseData.user.id);
       history.push('/u1/transactions');
     } catch (err) {
       console.log(err);
@@ -91,6 +79,7 @@ const Login = (props) => {
             Sign up
           </Button>
         </div>
+        {isLoading && <p>Loading...</p>}
       </div>
     </form>
   );
