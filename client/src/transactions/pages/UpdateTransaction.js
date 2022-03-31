@@ -44,7 +44,7 @@ const UpdateTransactions = (props) => {
     getTransactions();
     setIsLoading(false);
     return () => setIsLoading(false);
-  }, []);
+  }, [getTransactions]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -70,7 +70,7 @@ const UpdateTransactions = (props) => {
       console.log(err);
     }
 
-    history.push('/u1/transactions');
+    history.push(`/${userId}/transactions`);
   };
 
   if (isLoading) {
