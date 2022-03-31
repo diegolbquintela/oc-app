@@ -8,13 +8,12 @@ import classes from './Auth.module.css';
 
 const Signup = (props) => {
   const auth = useContext(AuthContext);
+  const history = useHistory();
   const nameInputRef = useRef();
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const formRef = useRef();
   const { isLoading, error, errorMessage, sendRequest, clearError } = useHttp();
-
-  const history = useHistory();
 
   const submitLoginHandler = async (e) => {
     e.preventDefault();
@@ -35,9 +34,12 @@ const Signup = (props) => {
       );
 
       auth.login();
+      history.push('/');
     } catch (err) {
       console.log(err);
     }
+
+    clearError();
   };
 
   return (

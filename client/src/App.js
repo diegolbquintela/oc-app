@@ -11,6 +11,8 @@ import MainNavigation from './shared/components/Navigation/MainNavigation';
 import HomePage from './homepage/pages/HomePage';
 import Authentication from './users/pages/Authentication';
 import Header from './shared/components/Header/Header';
+
+// TODO: change this component to TRANSACTIONS
 import Holdings from './transactions/pages/Holdings';
 import Footer from './shared/components/Footer/Footer';
 
@@ -40,10 +42,10 @@ function App() {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/u1/transactions" exact>
+        <Route path={`/${userId}/transactions`} exact>
           <Holdings />
         </Route>
-        {/* <Route path="/u1/articles" exact>
+        {/* <Route path={`/${userId}/articles`} exact>
           <Articles />
         </Route> */}
       </Switch>
@@ -56,6 +58,9 @@ function App() {
         </Route>
         <Route path="/auth" exact>
           <Authentication />
+          {/* <Route path={`/${userId}/articles`} exact>
+          <Articles />
+        </Route> */}
         </Route>
         <Redirect to="/" />
       </Switch>
@@ -75,6 +80,7 @@ function App() {
               </div>
             }
           >
+            {/* FIX THISS */}
             <Route path="/holdings/:transactionId" exact>
               <UpdateTransactions />
             </Route>

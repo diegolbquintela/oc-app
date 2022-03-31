@@ -1,18 +1,22 @@
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useEffect, useCallback, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { AuthContext } from '../../shared/context/auth-context';
+
 import Button from '../../shared/components/UIElements/Button/Button';
 import useForm from '../../shared/hooks/form/Form';
 
 import classes from './UpdateTransaction.module.css';
 
 const UpdateTransactions = (props) => {
+  const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [fetchedData, setFetchedData] = useState('');
   const transactionId = useParams().transactionId;
   const history = useHistory();
-  const userId = 'u1';
   const priceInputRef = useRef();
   const quantityInputRef = useRef();
+
+  const userId = auth.userId;
 
   const getTransactions = useCallback(async () => {
     try {
@@ -32,7 +36,7 @@ const UpdateTransactions = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-  }, [fetchedData, transactionId]);
+  }, [fetchedData, transactionId, userId]);
 
   // Get Transactions By Id
   useEffect(() => {

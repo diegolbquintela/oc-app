@@ -166,13 +166,12 @@ exports.deleteTransactionById = async (req, res, next) => {
     sess.startTransaction();
     await transaction.remove({ session: sess });
     transaction.user.transactions.pull(transaction);
-
     await transaction.user.save({ session: sess });
-    await sess.commitTransaction;
+    await sess.commitTransaction();
   } catch (err) {
     return next(
       new HttpError(
-        'Something went wrong, could not updated the transaction.',
+        'Something went wrong, could not delete the transaction.',
         500
       )
     );

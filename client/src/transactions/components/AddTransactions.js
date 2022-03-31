@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import classes from './AddTransactions.module.css';
-import Button from '../../shared/components/UIElements/Button/Button';
 import useForm from '../../shared/hooks/form/Form';
 import { uiActions } from '../../shared/store/ui-slice';
+import { useHttp } from '../../hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import classes from './AddTransactions.module.css';
+import Button from '../../shared/components/UIElements/Button/Button';
 
 // TODO: add condition: buy or sell
 const AddTransactions = () => {
+  const auth = useContext(AuthContext);
   const [ticker, setTicker] = useState('');
   const [price, setPrice] = useState('');
   const [quantity, setQuantity] = useState('');
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { isLoading, error, errorMessage, sendRequest, clearError } = useHttp();
+
+  //user id
+  const userId = auth.userId;
 
   const tickerInputHandler = (e) => {
     setTicker(e.target.value);
@@ -29,34 +34,27 @@ const AddTransactions = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + '/transactions',
+
+        'POST',
         {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            ticker: ticker.toUpperCase().trim(),
-            price,
-            quantity,
-            user: 'u1',
-          }),
-        }
+          'Content-Type': 'application/json',
+        },
+        JSON.stringify({
+          ticker: ticker.toUpperCase().trim(),
+          price,
+          quantity,
+          user: userId,
+        })
       );
 
-      const responseData = await response.json();
-      if (!responseData.ok) {
-        setError(true);
-        setErrorMessage(responseData.message);
-        throw new Error(responseData.message);
-      }
       dispatch(uiActions.increment());
+      clearError();
 
       setTicker('');
       setPrice('');
       setQuantity('');
-      setError(false);
     } catch (err) {
       console.log(err);
     }

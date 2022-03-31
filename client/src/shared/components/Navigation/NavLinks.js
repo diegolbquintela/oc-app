@@ -11,6 +11,8 @@ const NavLinks = (props) => {
     auth.logout();
   };
 
+  const userId = auth.userId;
+
   return (
     <ul className={classes.nav_links}>
       <li>
@@ -27,7 +29,7 @@ const NavLinks = (props) => {
       )} */}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/u1/transactions">TRANSACTIONS</NavLink>
+          <NavLink to={`/${userId}/transactions`}>TRANSACTIONS</NavLink>
         </li>
       )}
       {/* <li>

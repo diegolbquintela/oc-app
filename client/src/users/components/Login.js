@@ -31,8 +31,9 @@ const Login = (props) => {
         })
       );
 
+      console.log(responseData.user.id);
       auth.login(responseData.user.id);
-      history.push('/u1/transactions');
+      history.push('/');
     } catch (err) {
       console.log(err);
     }

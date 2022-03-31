@@ -1,25 +1,33 @@
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { uiActions } from '../../shared/store/ui-slice';
 
+import { AuthContext } from '../../shared/context/auth-context';
+import { useHttp } from '../../hooks/http-hook';
 import classes from './TransactionsList.module.css';
 
 const TransactionsListItem = (props) => {
+  const auth = useContext(AuthContext);
   const history = useHistory();
   const dispatch = useDispatch();
+  const { isLoading, error, errorMessage, sendRequest, clearError } = useHttp();
+
+  const userId = auth.userId;
 
   const editButtonHandler = (transactionId) => {
     history.push(`/holdings/${transactionId}`);
   };
 
-  const removeButtonHandler = (transactionId) => {
+  // TODO: push DELETE logic into a separate component
+  const removeButtonHandler = async (transactionId) => {
     try {
-      fetch(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL +
-          `/transactions/${props.userId}/${transactionId}`,
-        {
-          method: 'DELETE',
-        }
+          `/transactions/${userId}/${transactionId}`,
+        'DELETE',
+        {},
+        null
       ).then(() => {
         console.log(transactionId + ' deleted');
         dispatch(uiActions.decrement());
