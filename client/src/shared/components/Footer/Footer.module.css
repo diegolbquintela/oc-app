@@ -1,20 +1,7 @@
 footer {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  max-height: 3rem;
+  position: fixed;
+  left: 0;
+  bottom: 0;
   width: 100%;
   text-align: center;
-  margin: 1rem auto;
-}
-
-/* TODO: FIX FLEX */
-@media only screen and (max-width: 767px) {
-  footer {
-    /* margin: 0.1rem; */
-    padding: 1rem;
-  }
-  footer p {
-    display: inline;
-  }
 }
