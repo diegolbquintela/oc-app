@@ -77,7 +77,7 @@ const Login = (props) => {
             onClick={props.onSignupClick}
             className={classes.btn_center}
           >
-            Sign up
+            Switch to Sign up
           </Button>
         </div>
         {isLoading && <p>Loading...</p>}

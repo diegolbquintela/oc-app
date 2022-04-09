@@ -35,6 +35,8 @@ export const useHttp = () => {
 
         // handling 400 or 500 errors
         if (!response.ok) {
+          setError(true);
+          setErrorMessage(responseData.message);
           throw new Error(responseData.message);
         }
 

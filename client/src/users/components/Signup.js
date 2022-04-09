@@ -8,6 +8,7 @@ import classes from './Auth.module.css';
 
 const Signup = (props) => {
   const auth = useContext(AuthContext);
+  const [userExistsError, setUserExistsError] = useState(null);
   const history = useHistory();
   const nameInputRef = useRef();
   const emailInputRef = useRef();
@@ -36,6 +37,7 @@ const Signup = (props) => {
       auth.login();
       history.push('/');
     } catch (err) {
+      setUserExistsError(err.message);
       console.log(err);
     }
 
@@ -77,6 +79,7 @@ const Signup = (props) => {
         </div>
 
         <div className={classes.error_message}>
+          {userExistsError && <p>{userExistsError}</p>}
           {error && <p>{errorMessage}</p>}
         </div>
 
@@ -90,9 +93,10 @@ const Signup = (props) => {
             onClick={props.onLoginClick}
             className={classes.btn_center}
           >
-            Login
+            Switch to Login
           </Button>
         </div>
+
         {isLoading && <p>Loading...</p>}
       </div>
     </form>

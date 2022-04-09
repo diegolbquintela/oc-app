@@ -15,9 +15,9 @@ html {
 body {
   box-sizing: border-box;
   width: 100vw;
-  position: relative;
   display: flex;
   align-items: center;
   align-content: center;
-  justify-content: center;
+  justify-content: space-around;
+  flex-direction: column;
 }
