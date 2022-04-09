@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcyptjs');
+const jwt = require('jsonwebtoken');
+
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 
@@ -22,10 +25,17 @@ const signup = async (req, res, next) => {
     return next(new HttpError('User already exists. Please, login. ', 422));
   }
 
+  let hashedPassword;
+  try {
+    hashedPassowrd = await bcrypt.hash(password, 12);
+  } catch (error) {
+    return next(new HttpError('Could not create user, please try again.', 500));
+  }
+
   const createdUser = new User({
     name,
     email,
-    password,
+    password: hashedPassword,
     transactions: [],
   });
 
@@ -35,7 +45,22 @@ const signup = async (req, res, next) => {
     return next(new HttpError('Signing up failed, please try again', 500));
   }
 
-  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+  let token;
+  try {
+    jwt.sign(
+      { userId: createdUser.id, email: createdUser.email },
+      process.env.JWT_KEY,
+      { expiresIn: '1h' }
+    );
+  } catch (error) {
+    return next(
+      new HttpError('Signing up failed, please try again later.', 500)
+    );
+  }
+
+  res
+    .status(201)
+    .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -48,15 +73,44 @@ const login = async (req, res, next) => {
     return next(new HttpError('Logging in failed, please try again', 500));
   }
 
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
     return next(
       new HttpError('Could not identify user, invalid credentials.', 401)
     );
   }
 
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (error) {
+    return next(
+      new HttpError('Could not log you in, please check your credentials.', 401)
+    );
+  }
+
+  if (!isValidPassword) {
+    return next(
+      new HttpError('Could not log you in, please check your credentials.', 401)
+    );
+  }
+
+  let token;
+  try {
+    jwt.sign(
+      { userId: existingUser.id, email: existingUser.email },
+      process.env.JWT_KEY,
+      { expiresIn: '1h' }
+    );
+  } catch (error) {
+    return next(
+      new HttpError('Logging in failed, please try again later.', 500)
+    );
+  }
+
   res.json({
-    message: 'logged in',
-    user: existingUser.toObject({ getters: true }),
+    userId: existingUser.id,
+    email: existingUser.email,
+    token: token,
   });
 };
 
