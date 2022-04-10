@@ -1,4 +1,4 @@
-import Button from '../../components/UIElements/Button/Button';
+import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Form.module.css';
 
 const useForm = (props) => {
