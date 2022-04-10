@@ -37,6 +37,7 @@ const AddTransactions = () => {
         process.env.REACT_APP_BACKEND_URL + '/transactions',
         'POST',
         {
+          'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.token,
         },
         JSON.stringify({
