@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useHttp } from '../../hooks/http-hook';
+import { useHttp } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
@@ -21,7 +21,7 @@ const Signup = (props) => {
 
     // TODO: improve client validation
     try {
-      await sendRequest(
+      const responseData = await sendRequest(
         process.env.REACT_APP_BACKEND_URL + '/users/signup',
         'POST',
         {
@@ -34,7 +34,7 @@ const Signup = (props) => {
         })
       );
 
-      auth.login();
+      auth.login(responseData.userId, responseData.token);
       history.push('/');
     } catch (err) {
       setUserExistsError(err.message);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 
-import { useHttp } from '../../hooks/http-hook';
+import { useHttp } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import TransactionsListItem from './TransactionsListItem';
 import classes from './TransactionsList.module.css';
@@ -23,7 +23,9 @@ const Holdings = (props) => {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/transactions/${userId}`,
           'GET',
-          {},
+          {
+            Authorization: 'Bearer ' + auth.token,
+          },
           null
         );
 

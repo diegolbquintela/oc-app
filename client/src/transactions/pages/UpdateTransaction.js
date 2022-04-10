@@ -3,7 +3,6 @@ import { useParams, useHistory } from 'react-router-dom';
 import { AuthContext } from '../../shared/context/auth-context';
 
 import Button from '../../shared/components/UIElements/Button/Button';
-import useForm from '../../shared/hooks/form/Form';
 
 import classes from './UpdateTransaction.module.css';
 
@@ -22,11 +21,16 @@ const UpdateTransactions = (props) => {
     try {
       const response = await fetch(
         process.env.REACT_APP_BACKEND_URL +
-          `/transactions/${userId}/${transactionId}`
+          `/transactions/${userId}/${transactionId}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: 'Bearer ' + auth.token,
+          },
+        }
       );
       const responseData = await response.json();
 
-      console.log(responseData);
       if (!response.ok) {
         throw new Error(responseData.message);
       }
@@ -36,7 +40,7 @@ const UpdateTransactions = (props) => {
     } catch (err) {
       console.log(err.message);
     }
-  }, [fetchedData, transactionId, userId]);
+  }, [fetchedData, transactionId, userId, auth.token]);
 
   // Get Transactions By Id
   useEffect(() => {
@@ -44,7 +48,7 @@ const UpdateTransactions = (props) => {
     getTransactions();
     setIsLoading(false);
     return () => setIsLoading(false);
-  }, [getTransactions]);
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -57,6 +61,7 @@ const UpdateTransactions = (props) => {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + auth.token,
           },
           body: JSON.stringify({
             price: priceInputRef.current.value,

@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
-import useForm from '../../shared/hooks/form/Form';
 import { uiActions } from '../../shared/store/ui-slice';
-import { useHttp } from '../../hooks/http-hook';
+import { useHttp } from '../../shared/hooks/http-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import classes from './AddTransactions.module.css';
 import Button from '../../shared/components/UIElements/Button/Button';
@@ -36,10 +35,9 @@ const AddTransactions = () => {
     try {
       await sendRequest(
         process.env.REACT_APP_BACKEND_URL + '/transactions',
-
         'POST',
         {
-          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + auth.token,
         },
         JSON.stringify({
           ticker: ticker.toUpperCase().trim(),

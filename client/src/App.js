@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,7 +8,7 @@ import {
 
 import { AuthContext } from './shared/context/auth-context';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
-import HomePage from './homepage/pages/HomePage';
+import HomePage from './shared/homepage/pages/HomePage';
 import Authentication from './users/pages/Authentication';
 import Header from './shared/components/Header/Header';
 
@@ -16,27 +16,18 @@ import Header from './shared/components/Header/Header';
 import Holdings from './transactions/pages/Holdings';
 import Footer from './shared/components/Footer/Footer';
 
+import { useAuth } from './shared/hooks/auth-hook';
+
 const UpdateTransactions = React.lazy(() =>
   import('./transactions/pages/UpdateTransaction')
 );
 const Articles = React.lazy(() => import('./articles/pages/Articles'));
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true);
-    setUserId(uid);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    setUserId(null);
-  }, []);
+  const { token, login, logout, userId } = useAuth();
 
   let routes;
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
         <Route path="/" exact>
@@ -68,7 +59,15 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userId, login, logout }}>
+    <AuthContext.Provider
+      value={{
+        isLoggedIn: !!token,
+        token,
+        userId,
+        login,
+        logout,
+      }}
+    >
       <Router>
         <MainNavigation />
         {/* <Header /> */}
@@ -80,7 +79,7 @@ function App() {
               </div>
             }
           >
-            {/* FIX THISS */}
+            {/* FIX  */}
             <Route path="/holdings/:transactionId" exact>
               <UpdateTransactions />
             </Route>

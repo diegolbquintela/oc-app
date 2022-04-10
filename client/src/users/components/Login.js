@@ -2,7 +2,7 @@ import React, { useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../shared/context/auth-context';
-import { useHttp } from '../../hooks/http-hook';
+import { useHttp } from '../../shared/hooks/http-hook';
 import Button from '../../shared/components/UIElements/Button/Button';
 import classes from './Auth.module.css';
 
@@ -31,8 +31,7 @@ const Login = (props) => {
         })
       );
 
-      console.log(responseData.user.id);
-      auth.login(responseData.user.id);
+      auth.login(responseData.userId, responseData.token);
       history.push('/');
     } catch (err) {
       console.log(err);

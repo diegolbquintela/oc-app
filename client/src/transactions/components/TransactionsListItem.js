@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { uiActions } from '../../shared/store/ui-slice';
 
 import { AuthContext } from '../../shared/context/auth-context';
-import { useHttp } from '../../hooks/http-hook';
+import { useHttp } from '../../shared/hooks/http-hook';
 import classes from './TransactionsList.module.css';
 
 const TransactionsListItem = (props) => {
@@ -26,7 +26,9 @@ const TransactionsListItem = (props) => {
         process.env.REACT_APP_BACKEND_URL +
           `/transactions/${userId}/${transactionId}`,
         'DELETE',
-        {},
+        {
+          Authorization: 'Bearer ' + auth.token,
+        },
         null
       ).then(() => {
         console.log(transactionId + ' deleted');

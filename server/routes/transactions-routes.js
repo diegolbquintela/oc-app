@@ -2,12 +2,15 @@ const express = require('express');
 const expressValidator = require('express-validator');
 
 const transactionsControllers = require('../controllers/transactions-controllers');
+const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
 router.get('/:uid', transactionsControllers.getTransactionsByUserId);
 
 router.get('/:uid/:tid', transactionsControllers.getTransactionsById);
+
+router.use(checkAuth);
 
 router.post(
   '/',

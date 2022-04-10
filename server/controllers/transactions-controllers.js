@@ -22,7 +22,7 @@ exports.getTransactionsById = async (req, res, next) => {
       new HttpError('Could not find a transaction for the provided id.', 404)
     );
   }
-  res.json({ transaction });
+  res.json({ transaction: transaction.toObject({ getters: true }) });
 };
 
 // Get all transactions by user id
@@ -41,7 +41,7 @@ exports.getTransactionsByUserId = async (req, res, next) => {
     );
   }
 
-  return res.status(200).json({
+  res.status(200).json({
     success: true,
     transactions: transactions.map((transaction) =>
       transaction.toObject({ getters: true })
@@ -52,7 +52,6 @@ exports.getTransactionsByUserId = async (req, res, next) => {
 exports.addTransaction = async (req, res, next) => {
   const errors = expressValidator.validationResult(req);
   if (!errors.isEmpty()) {
-    res.status(422);
     return next(new HttpError('Invalid inputs passed.', 422));
   }
 
@@ -70,7 +69,7 @@ exports.addTransaction = async (req, res, next) => {
   // check if user exists
   let creator;
   try {
-    creator = await User.findById(user);
+    creator = await User.findById(req.userData.userId);
   } catch (error) {
     return next(
       new HttpError('Creating transaction failed, please try again', 500)
@@ -96,7 +95,7 @@ exports.addTransaction = async (req, res, next) => {
 
   res.status(201).json({
     success: true,
-    transaction: createdTransaction.toObject({ getters: true }),
+    transaction: createdTransaction,
   });
 };
 
@@ -115,7 +114,16 @@ exports.updateTransactionById = async (req, res, next) => {
   try {
     updatedTransaction = await Transaction.findById(transactionId);
   } catch (err) {
-    return next(new HttpError('Transaction not found', 404));
+    return next(
+      new HttpError(
+        'Something went wrong, could not update the transaction.',
+        500
+      )
+    );
+  }
+
+  if (updatedTransaction.user.toString() !== req.userData.userId) {
+    return next(new HttpError('Not authorized to edit this transaction', 401));
   }
 
   updatedTransaction.price = price;
@@ -158,6 +166,12 @@ exports.deleteTransactionById = async (req, res, next) => {
   if (!transaction) {
     return next(
       new HttpError('Could not find a transaction with the id provided.', 404)
+    );
+  }
+
+  if (transaction.user.id !== req.userData.userId) {
+    return next(
+      new HttpError('Not authorized to delete this transaction', 401)
     );
   }
 
