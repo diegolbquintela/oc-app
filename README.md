@@ -1,4 +1,4 @@
-# Transactions Tracker (MERN)
+# Orpheus Capital App
 
 The Orpheus is a web app built to help investors learn more about personal finance and track their investments, by providing access to articles about the theme and providing a dashboard with information about investments.
 
