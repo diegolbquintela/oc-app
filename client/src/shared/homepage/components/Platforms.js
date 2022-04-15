@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import classes from './Platforms.module.css';
 
 const Platforms = () => {
@@ -10,7 +11,8 @@ const Platforms = () => {
           <h5>↳ Holdings Tracker</h5>
           <div>
             <p>Track Your Assets in a Single Platform</p>
-            <a href="">Explore the Holdings Tracker →</a>
+            {/* TODO: BUILD PRESENTATION PAGE FOR THE HOLDINGS TRACKER */}
+            <Link to="/auth">Explore the Holdings Tracker →</Link>
           </div>
         </li>
         <hr />
@@ -19,7 +21,8 @@ const Platforms = () => {
           <h5>↳ Articles</h5>
           <div>
             <p>Build a Solid Foundation With Timeless Knowledge</p>
-            <a href="">Explore Articles →</a>
+            {/* TODO: LINK TO PUBLISHER AND ADD ARTICLES TO UI */}
+            <a href="https://diegolucasq.medium.com/">Explore the Articles →</a>
           </div>
         </li>
       </ul>

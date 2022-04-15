@@ -1,47 +1,34 @@
 # Transactions Tracker (MERN)
 
-> Full stack transactions tracker.
-> Will evolve in the future to a Holdings tracker, where users will be able to add assets and track their performances.
+The Orpheus is a web app built to help investors learn more about personal finance and track their investments, by providing access to articles about the theme and providing a dashboard with information about investments.
+
+<!-- ADD GIF -->
+<!-- <p align="center">
+  <img src="" width="90%"align="center" >
+</p> -->
 
 ## Features
 
-## Usage
+- **Transactions Tracker** for tracking user transactions. Filters are being added.
 
-![Auth desktop](/assets/auth-screen.png)
-![Auth mobile](/assets/auth-mobile.png)
+- **Articles** with timeless lessons about personal finance, wealth generation and investing.
 
-Adding transactions is easy, just type quantity and price of acquisition. In the future these will be consolidated into a holdings screen, with charts and performance.
+- **Dashboard** is currently being built with the user's returns.
 
-![add transactions](/assets/add-transactions-mobile.png)
-![transactions list](/assets/transactions-list-mobile.png)
-![transactions list](/assets/transactions-list.png)
+## Demo
 
-## Usage
+Demo app live at [Firebase](http://oc-app-d92cd.web.app)
 
-```
-change config.env file in config folder
-```
+# Technical Specifications
 
-```
- Npm Install
- cd client npm install
- cd ..
- cd server npm install
- cd ..
+- React
+- Node.js
+- MongoDB (database will be moved to PostgreSQL)
 
+## Instructions
 
- 1) Run the Backend
- cd server
- npm start
-
- 2) Run the Frontend only
- cd client
- npm start
-
- # Build client
- cd client
- npm run build
-
- # Prod
- npm start
-```
+1. Clone
+2. Change config.env file in config folder
+3. Run `npm install` in the "client" folder and in the "server" folder
+4. Run the Backed `npm start` in the "server" folder
+5. Run the Frontend `npm start` in the "client" folder

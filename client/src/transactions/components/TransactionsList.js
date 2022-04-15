@@ -24,6 +24,7 @@ const Holdings = (props) => {
           `${process.env.REACT_APP_BACKEND_URL}/transactions/${userId}`,
           'GET',
           {
+            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + auth.token,
           },
           null

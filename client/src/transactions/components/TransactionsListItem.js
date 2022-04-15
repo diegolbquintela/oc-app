@@ -27,6 +27,7 @@ const TransactionsListItem = (props) => {
           `/transactions/${userId}/${transactionId}`,
         'DELETE',
         {
+          'Content-Type': 'application/json',
           Authorization: 'Bearer ' + auth.token,
         },
         null

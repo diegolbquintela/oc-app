@@ -14,27 +14,34 @@ const AlphaGeneration = () => {
             We are entering an era of uncertainty and continuous disruption.
           </h4>
 
+          {/* TODO: IMPROVE TEXT */}
+
           <p className={classes.description_container__text}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Repellendus incidunt eaque soluta necessitatibus atque blanditiis
-            dignissimos non possimus veritatis alias quia deserunt, itaque
-            excepturi cupiditate id voluptatum. Quis, aut harum!
+            Asymmetric bets are those where your downside is limited and known,
+            and your upside potential is uncapped or so high tat it seems
+            limitless.
           </p>
 
           <p className={classes.description_container__text}>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-            Repellendus incidunt eaque soluta necessitatibus atque blanditiis
-            dignissimos non possimus veritatis alias quia deserunt, itaque
-            excepturi cupiditate id voluptatum. Quis, aut harum!
+            Holding a portfolio with asymmetric bets means holding non-linear
+            growth. The most common sources of non-linearity and moats nowadays
+            are network effects and scalability.
           </p>
 
           <div className={classes.description_btn}>
             <a
               className={classes.description_btn__btn}
-              href="https://medium.com/orpheuswisdom"
+              href="https://diegolucasq.medium.com/"
             >
               Learn More About Alpha Generation →
             </a>
+            {/* TODO: CHANGE LINK AFTER TRANSFERING ESSAYS TO PUBLISHER */}
+            {/* <a
+              className={classes.description_btn__btn}
+              href="https://medium.com/orpheuswisdom"
+            >
+              Learn More About Alpha Generation →
+            </a> */}
           </div>
         </div>
       </div>
