@@ -13,7 +13,7 @@ The Orpheus is a web app built to help investors learn more about personal finan
 
 - **Articles** with timeless lessons about personal finance, wealth generation and investing.
 
-- **Dashboard** is currently being built with the user's returns.
+- **Dashboard** is currently being built for displaying user's returns and a chart with the Net Worth growth.
 
 ## Demo
 
@@ -23,7 +23,7 @@ Demo app live at [Firebase](http://oc-app-d92cd.web.app)
 
 - React
 - Node.js
-- MongoDB (database will be moved to PostgreSQL)
+- MongoDB
 
 ## Instructions
 
